@@ -1,0 +1,9 @@
+fpom flashk import Flask
+app= Flask (__name__)
+
+@app.route('/')
+def hello_world():
+  return 'Hello to the World of Flask!'
+
+if _name_== '_main_':
+  app.run()
