@@ -4,6 +4,28 @@
 
 {% block content %}
   <h1>Список мастер-классов!</h1>
-  <!-- здесь выводится список мастер-классов -->
-  <p>{{data}}</p>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Название</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Длительность</th>
+        <th scope="col">Описание</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- здесь выводится список мастер-классов -->
+      {% for item in data['master_classes']: %}
+      <tr>
+        <th scope="row">{{item['id']}}</th>
+        <td>{{item['title']}}</td>
+        <td>{{item['date_time']}}</td>
+        <td>{{item['duration']}} минут</td>
+        <td>{{item['description']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
 {% endblock %}

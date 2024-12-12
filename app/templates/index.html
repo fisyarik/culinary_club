@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Кулинарный клуб{% endblock %}
 
 {% block content %}
-  <h1>Welcome to my website!</h1>
-  <p>This is the homepage.</p>
+  <h1>Кулинарный клуб</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p><a class="link-opacity-100" href="/master_classes">Список мастер-классов</a></p>
+        <p><a class="link-opacity-100" href="/master_classes/add_participant">Записаться на мастер-класс</a></p>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -7,15 +7,20 @@
   {% if success == True %}
     <p>Участник успешно добавлен</p>
   {% endif %}
-  <form method="post">
-    <div>
-        <label>Введите имя участника</label>
-        <input type="text" name="participant_name">
+  <script type="text/javascript">
+    function buttonclick(text) {
+      alert(text);
+    }
+  </script>
+  <form method="post" class="w-50">
+    <div class="mb-3">
+        <label class="form-label">Введите имя участника</label>
+        <input class="form-control" type="text" name="participant_name">
     </div>
-    <div>
-        <label>Введите телефон</label>
-        <input type="text" name="participant_phone">
+    <div class="mb-3">
+        <label class="form-label">Введите телефон</label>
+        <input class="form-control" type="text" name="participant_phone">
     </div>
-    <input type="submit" value="Добавить">
+    <input type="submit"  class="btn btn-primary" value="Добавить" onclick="buttonclick('Кнопка нажата!')">
   </form>
 {% endblock %}
