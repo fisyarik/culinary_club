@@ -1,35 +1,42 @@
 {
     "master_classes": [
         {
-            "id": 1,
-            "places": 15,
             "date_time": "2 февраля; 15:40",
-            "title": "Готовка борща",
-            "duration": 60,
             "description": "расскажем исоторию борща, и научим готовить настоящий,вкусный борщ",
+            "duration": 60,
+            "id": 1,
             "participants": [
                 {
                     "id": 1,
                     "name": "Анфиса",
                     "phone_number": "+711111111"
                 }
-            ]
+            ],
+            "places": 15,
+            "title": "Готовка борща"
         },
         {
-            "id": 2,
-            "places": 15,
             "date_time": "12 февраля; 15:40",
-            "title": "Готовка спагетти",
-            "duration": 60,
             "description": "расскажем исоторию спагетти, и научим готовить настоящие, итальянские спагетти",
+            "duration": 60,
+            "id": 2,
             "participants": [
                 {
                     "id": 1,
                     "name": "Анфиса",
                     "phone_number": "+711111111"
                 }
-            ]
+            ],
+            "places": 15,
+            "title": "Готовка спагетти"
+        },
+        {
+            "date_time": "dsfgsdfg",
+            "description": "sdfgsdfg",
+            "duration": "44",
+            "id": 3,
+            "places": "66",
+            "title": "dsfgsdfg"
         }
-
     ]
 }

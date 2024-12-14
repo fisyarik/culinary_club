@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление мастер-класса{% endblock %}
+
+{% block content %}
+  <h1>Удаление мастер-класса</h1>
+  {% if success == True %}
+    <p>Мастер-класс "{{data['title']}}" успешно удален</p>
+    <p><a href="/master_classes">Вернуться к списку мастер-классов</a></p>
+  {% else %}
+    <p><a href="/master_classes">Вернуться к списку мастер-классов</a></p>
+    <p>Ошибка</p>
+  {% endif %}
+{% endblock %}

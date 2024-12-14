@@ -4,6 +4,7 @@
 
 {% block content %}
   <h1>Список мастер-классов!</h1>
+  <p><a href="/master_classes/add_master_class">Добавить новый мастер-класс</a></p>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -12,17 +13,22 @@
         <th scope="col">Дата</th>
         <th scope="col">Длительность</th>
         <th scope="col">Описание</th>
+        <th scope="col">Действия</th>
       </tr>
     </thead>
     <tbody>
       <!-- здесь выводится список мастер-классов -->
-      {% for item in data['master_classes']: %}
+      {% for item in data: %}
       <tr>
         <th scope="row">{{item['id']}}</th>
         <td>{{item['title']}}</td>
         <td>{{item['date_time']}}</td>
-        <td>{{item['duration']}} минут</td>
+        <td>{{item['duration']}} мин.</td>
         <td>{{item['description']}}</td>
+        <td>
+          <a href="/master_classes/delete/{{item['id']}}">Удалить</a><br>
+          <a href="/master_classes/{{item['id']}}/add_participant">Записаться</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

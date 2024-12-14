@@ -3,15 +3,11 @@
 {% block title %}Добавление участника{% endblock %}
 
 {% block content %}
-  <h1>Добавление участника</h1>
+  <h1>Добавление участника на мастер-класс</h1>
+  <h2>{{masterClass['title']}}</h1>
   {% if success == True %}
     <p>Участник успешно добавлен</p>
   {% endif %}
-  <script type="text/javascript">
-    function buttonclick(text) {
-      alert(text);
-    }
-  </script>
   <form method="post" class="w-50">
     <div class="mb-3">
         <label class="form-label">Введите имя участника</label>
@@ -21,6 +17,6 @@
         <label class="form-label">Введите телефон</label>
         <input class="form-control" type="text" name="participant_phone">
     </div>
-    <input type="submit"  class="btn btn-primary" value="Добавить" onclick="buttonclick('Кнопка нажата!')">
+    <input type="submit"  class="btn btn-primary" value="Добавить">
   </form>
 {% endblock %}

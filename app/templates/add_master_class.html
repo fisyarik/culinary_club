@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Добавление мастер-класса{% endblock %}
+
+{% block content %}
+  <h1>Добавление мастер-класса</h1>
+  {% if success == True %}
+    <p>Мастер-класс успешно добавлен</p>
+    <p><a href="/master_classes">Вернуться к списку мастер-классов</a></p>
+    <p><a href="/master_classes/add_master_class">Добавить новый мастер-класс</a></p>
+  {% else %}
+    {% if errorData and errorData['errors'] %}
+      <div class="alert alert-warning w-50">
+        {% for error in errorData['errors']: %}
+          <p>{{error['description']}}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form method="post" class="w-50">
+      <div class="mb-3">
+          <label class="form-label">Название мастер-класса</label>
+          <input 
+            class="form-control {% if errorData and 'title' in errorData['invalidFields'] %}is-invalid{% endif %}" 
+            type="text" name="title" 
+            {% if data and data['title'] %}value="{{data['title']}}"{% endif %}
+          >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Длительность (минут)</label>
+        <input 
+          class="form-control {% if errorData and 'duration' in errorData['invalidFields'] %}is-invalid{% endif %}" 
+          type="text" name="duration" 
+          {% if data and data['duration'] %}value="{{data['duration']}}"{% endif %}
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Количество мест</label>
+        <input 
+          class="form-control {% if errorData and 'places' in errorData['invalidFields'] %}is-invalid{% endif %}" 
+          type="text" name="places" 
+          {% if data and data['places'] %}value="{{data['places']}}"{% endif %}
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Дата проведения</label>
+        <input 
+          class="form-control {% if errorData and 'date_time' in errorData['invalidFields'] %}is-invalid{% endif %}" 
+          type="text" 
+          name="date_time" 
+          {% if data and data['date_time'] %}value="{{data['date_time']}}"{% endif %}
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Описание</label>
+        <textarea 
+          class="form-control {% if errorData and 'description' in errorData['invalidFields'] %}is-invalid{% endif %}" 
+          name="description"
+        >{% if data and data['description'] %}{{data['description']}}{% endif %}</textarea>
+      </div>
+      <input type="submit"  class="btn btn-primary" value="Добавить" >
+    </form>
+  {% endif %}
+{% endblock %}
