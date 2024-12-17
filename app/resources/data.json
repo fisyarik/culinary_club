@@ -25,18 +25,20 @@
                     "id": 1,
                     "name": "Анфиса",
                     "phone_number": "+711111111"
+                },
+                {
+                    "id": 2,
+                    "name": "Иван",
+                    "phone_number": "+7 (922) 222-22-22"
+                },
+                {
+                    "id": 3,
+                    "name": "Пётр",
+                    "phone_number": "+7 (922) 222-22-22"
                 }
             ],
             "places": 15,
             "title": "Готовка спагетти"
-        },
-        {
-            "date_time": "dsfgsdfg",
-            "description": "sdfgsdfg",
-            "duration": "44",
-            "id": 3,
-            "places": "66",
-            "title": "dsfgsdfg"
         }
     ]
 }

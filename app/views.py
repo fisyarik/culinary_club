@@ -37,6 +37,7 @@ def addMasterClass():
        'duration': duration,
        'date_time': dateTime,
        'places': places,
+       'participants': [],
        'id': maxId + 1 # устанавливаем значение нового идентификатора
     }
     errorData = functions.validateMasterClassData(newMasterClass)
@@ -79,15 +80,28 @@ def showAddParticipantForm(id):
 #Обработка введенных данных с формы добавления участника
 @app.route('/master_classes/<int:id>/add_participant', methods=['POST'])
 def addParticipant(id):
+    masterClass = functions.getMasterClassById(id)
     participantName = request.form.get('participant_name', '')
     participantPhone = request.form.get('participant_phone', '')
-    data = {'name': participantName, 'phone_number': participantPhone}
     
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    filePath = os.path.join(SITE_ROOT, "resources", "data_test.json")
+    # Определяем максимальное значение id для всех участников выбранного мастер-класса
+    maxId = functions.getLastMasterClassParticipantId(masterClass)
+    participant = {
+        'name': participantName, 
+        'phone_number': participantPhone,
+        'id': maxId + 1 # устанавливаем значение нового идентификатора
+    }
 
-    #Запись данных в файл
-    with open(filePath, "w", encoding="utf-8") as f:
-      json.dump(data, f)
+    errorData = functions.validateParticipantData(participant)
+    if not errorData['errors']:
+        # Добавляем новый элемент к списку участников
+        masterClass['participants'].append(participant)
     
-    return render_template('add_participant.html', success=True)
+        # Обновляем в файле данные по текущему мастер-классу
+        functions.updateMasterClassInFile(masterClass)
+    
+        return render_template('add_participant.html', success=True, masterClass = masterClass)
+    else:
+        return render_template('add_participant.html', success=False, errorData=errorData, data=participant)
+    
+    

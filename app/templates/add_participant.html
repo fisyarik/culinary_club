@@ -3,20 +3,105 @@
 {% block title %}Добавление участника{% endblock %}
 
 {% block content %}
-  <h1>Добавление участника на мастер-класс</h1>
-  <h2>{{masterClass['title']}}</h1>
+<h1>Добавление участника на мастер-класс</h1>
+<h2>{{masterClass['title']}}</h1>
   {% if success == True %}
-    <p>Участник успешно добавлен</p>
-  {% endif %}
-  <form method="post" class="w-50">
+  <p>Участник успешно добавлен</p>
+  <p><a href="/master_classes">Вернуться к списку мастер-классов</a></p>
+  {% else %}
+  <form id="add_participant_form" method="post" class="w-50 needs-validation" novalidate>
     <div class="mb-3">
-        <label class="form-label">Введите имя участника</label>
-        <input class="form-control" type="text" name="participant_name">
+      <label class="form-label" for="participant_name">Введите имя участника</label>
+      <input class="form-control" type="text" name="participant_name" id="participant_name" required autocomplete="off">
+      <div class="invalid-feedback">
+        Пожалуйста, укажите имя
+      </div>
     </div>
     <div class="mb-3">
-        <label class="form-label">Введите телефон</label>
-        <input class="form-control" type="text" name="participant_phone">
+      <label class="form-label" for="participant_phone">Введите телефон</label>
+      <input class="form-control" type="text" name="participant_phone" id="participant_phone" required
+        placeholder="+7 (922) 222-22-22" autocomplete="off">
+      <div class="invalid-feedback">
+        Пожалуйста, укажите телефон в формате +7 (922) 222-22-22
+      </div>
     </div>
-    <input type="submit"  class="btn btn-primary" value="Добавить">
+    <input type="submit" class="btn btn-primary" value="Добавить">
   </form>
-{% endblock %}
+  {% endif %}
+
+  <script type="text/javascript">
+    // Функция проверки корректности номера телефона
+    function validatePhone(input) {
+      // Регулярное выражение для проверки строки на соответствие формату +7 (922) 222-22-22 или 8 (922) 222-22-22
+      let regex = /^(\+7|8)\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/;
+      let phone = input.value;
+
+      if (regex.test(phone)) {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    // Функция проверки корректности введенного имени (если значение не пустое)
+    function validateName(input) {
+      let name = input.value;
+
+      if (name != "") {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    // Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
+    (function () {
+      'use strict'
+
+      // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Зацикливайтесь на них и предотвращайте отправку
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            let isValid = true;
+            if (!form.checkValidity()) {
+              isValid = false
+            }
+
+            // Проверяем номер телефона
+            let phoneInput = document.getElementById('participant_phone')
+            if (!validatePhone(phoneInput)) {
+              isValid = false
+              phoneInput.classList.add('is-invalid')
+              phoneInput.classList.remove('is-valid')
+            } else {
+              phoneInput.classList.remove('is-invalid')
+              phoneInput.classList.add('is-valid')
+            }
+
+            // Проверяем имя
+            let nameInput = document.getElementById('participant_name')
+            if (!validateName(nameInput)) {
+              isValid = false
+              nameInput.classList.add('is-invalid')
+              nameInput.classList.remove('is-valid')
+            } else {
+              nameInput.classList.remove('is-invalid')
+              nameInput.classList.add('is-valid')
+            }
+
+            if (!isValid) {
+              event.preventDefault()
+              event.stopPropagation()
+            } else {
+              form.classList.add('was-validated')
+            }
+          }, false)
+        })
+    })()
+
+  </script>
+
+  {% endblock %}
