@@ -104,4 +104,8 @@ def addParticipant(id):
     else:
         return render_template('add_participant.html', success=False, errorData=errorData, data=participant)
     
-    
+# Получить список участников в формате json
+@app.route('/master_classes/<int:id>/get_participants', methods=['GET'])
+def showParticipantList(id):
+    masterClass = functions.getMasterClassById(id)
+    return jsonify(masterClass['participants'])

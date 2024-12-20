@@ -5,7 +5,7 @@
 {% block content %}
   <h1>Список мастер-классов!</h1>
   <p><a href="/master_classes/add_master_class">Добавить новый мастер-класс</a></p>
-  <table class="table table-bordered">
+  <table class="master-class-list-wide table table-bordered">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -29,17 +29,96 @@
         <td>{{item['duration']}} мин.</td>
         <td>{{item['description']}}</td>
         <td>
-          {% for participant in item['participants']: %}
-            <span data-id="{{participant['id']}}" title="{{participant['phone_number']}}">{{participant['name']}}</span><br>
-          {% endfor %}
+          <button
+            type="button"
+            class="compact btn btn-primary"
+            data-id="{{item['id']}}"
+            onclick="getParticipantList(); return false;"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Вывести список участников"
+          >
+            Участники
+          </button><br>
+          <a class="compact btn btn-primary" href="/master_classes/{{item['id']}}/add_participant">Записаться</a>
         </td>
         <td>
-          <a href="/master_classes/delete/{{item['id']}}">Удалить</a><br>
-          <a href="/master_classes/{{item['id']}}/add_participant">Записаться</a>
+          <a class="btn btn-danger" href="/master_classes/delete/{{item['id']}}">Удалить</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  <div class="master-class-list-compact">
+    <dvi>
+       <!-- здесь выводится список мастер-классов -->
+       {% for item in data: %}
+        <div class="master-class-item">
+          <strong>#</strong>{{item['id']}}<br>
+          <strong>Название:</strong> {{item['title']}}<br>
+          <strong>Дата:</strong> {{item['date_time']}}<br>
+          <strong>Длительность:</strong> {{item['duration']}}<br>
+          <strong>Количество мест:</strong> >{{item['places']}} (занято {{item['participants']|length}})<br>
+          <strong>Описание:</strong> {{item['description']}}<br><br>
+          <button type="button" class="btn btn-primary" data-id="{{item['id']}}" onclick="getParticipantList(); return false;">
+            Участники
+          </button>
+          <a class="btn btn-primary" href="/master_classes/delete/{{item['id']}}">Удалить</a>
+          <a class="btn btn-primary" href="/master_classes/{{item['id']}}/add_participant">Записаться</a>
+        </div>
+       {% endfor %}
+    </dvi>
+  </div>
 
+  <div class="modal fade"  id="participant_modal" tabindex="-1" aria-labelledby="modalTitle" style="display: none;" aria-hidden="true">
+    <!-- Vertically centered scrollable modal -->
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Список участников</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    
+    function getParticipantList() {
+      let id = $(event.target).data('id')
+      $.ajax({
+        url : '/master_classes/' + id + '/get_participants',
+        type: 'GET',
+        success : showParticipantListData
+      })
+    }
+
+    function showParticipantListData(participantList) {
+      var modal = new bootstrap.Modal(document.getElementById('participant_modal'), {})
+      modal.show()
+      let modalData = $('<ul></ul>')
+      for (let i = 0; i < participantList.length; i++) {
+        let elem = participantList[i]
+        let htmlElementData = $('<li">' + elem.id + '. <strong>Имя:</strong> ' + elem.name + ' <strong>Телефон: </strong> ' + elem.phone_number + '</span><br>')
+        modalData.append(htmlElementData)
+      }
+      $('#participant_modal .modal-body').html(modalData)
+      modal.show()
+      console.log(participantList)
+    }
+
+  </script>
+  <script  type="text/javascript">
+      (function () {
+        'use strict'
+  
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+      })()
+  </script>
 {% endblock %}

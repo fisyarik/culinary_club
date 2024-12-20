@@ -1,0 +1,45 @@
+.master-class-list-compact {
+    display: none;
+}
+.master-class-list-wide .btn {
+    margin-bottom: 5px;
+}
+.btn {
+    text-decoration: underline;
+}
+.btn.compact {
+    padding: 3px 7px;
+}
+.add-master-class-form, .add-participant-form {
+    width: 50%;
+    min-width: 600px;
+}
+.master-class-item {
+    border: 1px solid #cccccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.tooltip .tooltip-inner {
+    background-color: #f0dd75;
+    color: black;
+}
+.tooltip .tooltip-arrow {
+    --bs-tooltip-bg: #f0dd75;
+}
+
+@media (max-width: 1024px) {
+    .master-class-list-compact {
+        display: block;
+    }
+    .master-class-list-wide {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .add-master-class-form, .add-participant-form {
+        width: 100%;
+        min-width: auto;
+    }
+}
