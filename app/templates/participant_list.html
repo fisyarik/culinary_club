@@ -1,0 +1,27 @@
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Телефон</th>
+            <th></th>
+        </tr>
+        {% for item in data: %}
+            <tr>
+                <td>{{ item['id'] }}</td>
+                <td>{{ item['name'] }}</td>
+                <td>{{ item['phone_number'] }}</td>
+                <td>
+                    <a  data-master-class-id="{{masterClassId}}"
+                        data-id="{{item['id']}}"
+                        href="#"
+                        class="remove-participant" 
+                        onclick="return removeParticipant()" 
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top" 
+                        title="Удалить участника">X</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -57,7 +57,7 @@
           <strong>Название:</strong> {{item['title']}}<br>
           <strong>Дата:</strong> {{item['date_time']}}<br>
           <strong>Длительность:</strong> {{item['duration']}}<br>
-          <strong>Количество мест:</strong> >{{item['places']}} (занято {{item['participants']|length}})<br>
+          <strong>Количество мест:</strong> {{item['places']}} (занято {{item['participants']|length}})<br>
           <strong>Описание:</strong> {{item['description']}}<br><br>
           <button type="button" class="btn btn-primary" data-id="{{item['id']}}" onclick="getParticipantList(); return false;">
             Участники
@@ -88,28 +88,44 @@
 
   <script type="text/javascript">
     
+    // Обработка события клика по кнопке "Список участников"
+    // Идентификатор мастер-класса определяется через атрибут кнопки data-id
     function getParticipantList() {
       let id = $(event.target).data('id')
+      showParticipantList(id)
+    }
+
+    // Вывод списка участников в модальном окне
+    // HTML списка участников формируется на стороне сервера
+    function showParticipantList(id) {
       $.ajax({
         url : '/master_classes/' + id + '/get_participants',
         type: 'GET',
-        success : showParticipantListData
+        success : function(data) {
+          var modal = new bootstrap.Modal(document.getElementById('participant_modal'), {})
+          modal.show()
+          $('#participant_modal .modal-body').html(data)
+          modal.show()
+        }
       })
     }
 
-    function showParticipantListData(participantList) {
-      var modal = new bootstrap.Modal(document.getElementById('participant_modal'), {})
-      modal.show()
-      let tableHead = '<tr><th>#</th><th>Имя</th><th>Телефон</th></tr>'
-      let modalData = $('<table class="table table-bordered">' + tableHead + '</table>')
-      for (let i = 0; i < participantList.length; i++) {
-        let elem = participantList[i]
-        let htmlElementData = $('<tr><td>' + elem.id + '</td><td>' + elem.name + '</td><td>' + elem.phone_number + '</td></tr>')
-        modalData.append(htmlElementData)
-      }
-      $('#participant_modal .modal-body').html(modalData)
-      modal.show()
-      console.log(participantList)
+    // Обработка события по клику на ссылку "удалить участника"
+    // Идентификатор мастер класса берется из атрибута ссылки data-master-class-id
+    // Идентификатор участника берется из атрибута ссылки data-id
+    // После удаление участника список обновляется
+    function removeParticipant() {
+      let participantId = $(event.target).data('id')
+      let masterClassId = $(event.target).data('master-class-id')
+      $(event.target).parent().html('<div class="spinner-border spinner-border-sm" role="status"></div>')
+      $.ajax({
+        url : '/master_classes/' + masterClassId + '/remove_participant/' + participantId,
+        type: 'GET',
+        success : function(data) {
+          $('#participant_modal .modal-body').html(data)
+        }
+      })
+      return false;
     }
 
   </script>
