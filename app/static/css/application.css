@@ -1,5 +1,20 @@
+
+table.master-class-list-wide {
+    --bs-table-bg: rgb(223 238 255);
+}
+
 .master-class-list-compact {
     display: none;
+}
+
+.add-master-class-link {
+    color: #ffffff;
+    text-shadow: 0px 0px 8px black;
+}
+
+body {
+    background-color: rgb(189, 216, 247);
+    color: rgb(0, 0, 0);
 }
 .master-class-list-wide .btn {
     margin-bottom: 5px;
@@ -19,6 +34,7 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
+    background-color: #e9edff;
 }
 .tooltip .tooltip-inner {
     background-color: #f0dd75;

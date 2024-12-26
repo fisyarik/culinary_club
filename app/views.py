@@ -3,16 +3,11 @@ from app import functions
 from app import app
 from flask import Flask, render_template, json, request, jsonify
 
-#Обработка главной страницы
+#Страница со списком мастер-классов
 @app.route('/')
 def index():
-  return render_template('index.html')
-
-#Страница со списком мастер-классов
-@app.route('/master_classes')
-def masterClasses():
     data = functions.getMasterClassList()
-    return render_template('master_classes.html', data=data)
+    return render_template('index.html', data=data)
 
 #Форма добавления мастер-класса
 @app.route('/master_classes/add_master_class', methods=['GET'])
